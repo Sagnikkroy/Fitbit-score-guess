@@ -5,10 +5,14 @@ import torch.optim
 import pandas as pd
 
 # %%
+
 model = nn.Sequential(
-    nn.Linear(3, 64),
+    nn.Linear(3, 128),
     nn.ReLU(),
-    nn.Linear(64, 32), 
+    nn.Dropout(0.2),  
+    nn.Linear(128, 64),
+    nn.ReLU(), 
+    nn.Linear(64, 32),
     nn.ReLU(),
     nn.Linear(32, 1)
 )
@@ -35,7 +39,7 @@ y_test=y[indices][train_size:]
 
 # %%
 loss_function=nn.MSELoss()
-optimizer=torch.optim.Adam(model.parameters(),lr=0.01)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-5)
 
 # %%
 for epoch in range(2500):
